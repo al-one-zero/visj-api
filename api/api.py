@@ -6,4 +6,4 @@ api = Flask(__name__)
 def home():
     return { 'page' : 'home' }
 
-api.run()
+api.run(debug = True, host = '0.0.0.0')

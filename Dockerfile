@@ -1,6 +1,6 @@
-FROM python:3.8
-COPY . /api
+FROM python:latest
+COPY api /api
 WORKDIR /api
 RUN pip install -r requirements.txt
-ENTRYPOINT ['python']
-CMD ['api.py']
+ENTRYPOINT ["python"]
+CMD ["api.py"]
