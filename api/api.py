@@ -1,9 +1,13 @@
+import pandas as pd
 from flask import Flask
+from routes import account_api
+
 
 api = Flask(__name__)
 
-@api.route('/')
-def home():
-    return { 'page' : 'home' }
+#To separte routes file from the run file
+api.register_blueprint(account_api)
 
-api.run(debug = True, host = '0.0.0.0')
+
+if __name__ =="__main__":
+    api.run(debug = True, host = '0.0.0.0')
