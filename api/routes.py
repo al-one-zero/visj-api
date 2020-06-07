@@ -13,11 +13,11 @@ def open_file(chemin_csv,p):
     df=pd.read_csv(chemin_csv,header=0,skiprows=lambda i: i>0 and random.random() > p,low_memory=False) 
     return df
 
-df=open_file('../../Data/full.csv',0.01)
+df=open_file('api/data/full.csv',0.01)
 
 account_api = Blueprint('account_api', __name__)
 
-model = pickle.load(open('model.visg','rb'))
+model = pickle.load(open('api/model.visg','rb'))
 
 @account_api.route('/predict',methods=['POST'])
 def predict():
