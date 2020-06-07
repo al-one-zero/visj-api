@@ -4,7 +4,7 @@ import numpy as np
 import random
 import pickle
 
-chemin_csv='api/data/full.csv'
+chemin_csv='data/full.csv'
 
 p = 0.01 # 1% of the lines
 
