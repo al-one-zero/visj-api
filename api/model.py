@@ -18,22 +18,22 @@ df=pd.read_csv(chemin_csv,header=0,skiprows=lambda i: i>0 and random.random() > 
 #drop features with to 60% null values 
 df=df[df.columns[df.isnull().mean() < 0.5]]
 
-#drop colum with same signification (code/signification) 
+#drop column with same signification (code/signification) 
 column_to_drop=['type_local','nature_culture','nom_commune']
 df.drop(column_to_drop, axis=1, inplace=True)
 
-#drop colum adress, w'll be working with longitude/latitude 
+#drop column adress, we'll be working with longitude/latitude 
 column_to_drop=['adresse_numero','adresse_nom_voie','adresse_code_voie']
 df.drop(column_to_drop, axis=1, inplace=True)
 
-#drop colum not useful for our context
+#drop column not useful for our context
 column_to_drop=['id_parcelle','date_mutation','numero_disposition']
 df.drop(column_to_drop, axis=1, inplace=True)
 
 #drop rows where 'valeur_fonciere' is NaN
 df = df.dropna(axis=0, subset=['valeur_fonciere'])
 
-#drop nombre_pieces_principales cause of the big correlation with  code_type_local 
+#drop nombre_pieces_principales cause of the big correlation with code_type_local 
 column_to_drop=['nombre_pieces_principales']
 df.drop(column_to_drop, axis=1, inplace=True)
 
@@ -46,7 +46,7 @@ for col in ('code_postal','longitude','latitude','surface_terrain','code_type_lo
 #drop rows where 'code_type_local' is NaN
 df = df.dropna(axis=0, subset=['code_type_local'])
 
-#Transormation
+#Transformation
 df["code_postal"]=df["code_postal"].apply(str)
 df["code_type_local"]=df["code_type_local"].apply(str)
 
@@ -66,8 +66,25 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random
 from sklearn.linear_model import ElasticNet
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import RobustScaler
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 
-ENet = make_pipeline(RobustScaler(), ElasticNet(alpha=0.0005, l1_ratio=.9, random_state=3))
+#Scaling to prepare for the PCA decomposition
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_train, X_test = scaler.transform(X_train), pca.transform(X_test)
 
-ENet.fit(X_train, y_train)
+#PCA
+pca = PCA(8)
+pca.fit(X_train)
+X_train, X_test = pca.transform(X_train), pca.transform(X_test)
+
+#Model training
+#ENet = make_pipeline(RobustScaler(), Lasso(alpha=0.05, random_state=3))
+Lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.05, random_state=1))
+
+#ENet.fit(X_train, y_train)
+#Using Lasso nets slightly better results
+Lasso.fit(X_train, y_train)
+
 pickle.dump(ENet,open('model.visg','wb'))
