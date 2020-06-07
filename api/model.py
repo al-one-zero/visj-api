@@ -69,13 +69,8 @@ from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
-#Scaling to prepare for the PCA decomposition
-scaler = StandardScaler()
-scaler.fit(X_train)
-X_train, X_test = scaler.transform(X_train), pca.transform(X_test)
-
 #PCA
-pca = PCA(8)
+pca = make_pipeline(RobustScaler, n_components=8)
 pca.fit(X_train)
 X_train, X_test = pca.transform(X_train), pca.transform(X_test)
 
