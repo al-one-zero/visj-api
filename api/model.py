@@ -4,7 +4,7 @@ import numpy as np
 import random
 import pickle
 
-chemin_csv='../../Data/full.csv'
+chemin_csv='data/full.csv'
 
 p = 0.01 # 1% of the lines
 
@@ -78,4 +78,14 @@ X_train, X_test = pca.transform(X_train), pca.transform(X_test)
 forest = make_pipeline(RobustScaler(), RandomForestRegressor())
 forest.fit(X_train, y_train)
 
+<<<<<<< HEAD
 pickle.dump(forest, open('model.visg','wb'))
+=======
+#ENet.fit(X_train, y_train)
+#Using Lasso nets slightly better results
+#Lasso.fit(X_train, y_train)
+#Using RANSAC Regressor nets even better results
+ransac.fit(X_train, y_train)
+
+pickle.dump(Lasso,open('api/model.visg','wb'))
+>>>>>>> d67dc0eca7d8909b36fd4c741366419c049d0e78
