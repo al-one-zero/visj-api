@@ -34,16 +34,16 @@ def predict():
 @account_api.route('/data_heatmap',methods=['GET'])
 def data_heatmap():
     res=df[['valeur_fonciere','latitude','longitude']]
-    return res.to_json(orient='series')
+    return res.to_json(orient='values')
 
 @account_api.route('/data_graphique_avg_price_dep',methods=['GET'])
 def data_graphique_avg_price_dep():
     res=df[['valeur_fonciere','code_departement']]
     res=res.groupby(['code_departement']).mean()
-    return res.to_json()
+    return res.to_json(orient='values')
 
 @account_api.route('/data_graphique_avg_surface_dep',methods=['GET'])
 def data_graphique_avg_surface_dep():
     res=df[['surface_terrain','code_departement']]
-    res=res.groupby(['code_departement']).mean()
+    res=res.groupby(['code_departement']).mean(orient='values')
     return res.to_json()
