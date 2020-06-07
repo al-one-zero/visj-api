@@ -17,11 +17,7 @@ df=open_file('../../Data/full.csv',0.01)
 
 account_api = Blueprint('account_api', __name__)
 
-model = pickle.load(open('model.pkl','rb'))
-
-@account_api.route('/')
-def home():
-    return "Hello " 
+model = pickle.load(open('model.visg','rb'))
 
 @account_api.route('/predict',methods=['POST'])
 def predict():
