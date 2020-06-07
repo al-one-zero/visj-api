@@ -34,7 +34,7 @@ def predict():
 @account_api.route('/data_heatmap',methods=['GET'])
 def data_heatmap():
     res=df[['valeur_fonciere','latitude','longitude']]
-    return res.to_json()
+    return res.to_json(orient='series')
 
 @account_api.route('/data_graphique_avg_price_dep',methods=['GET'])
 def data_graphique_avg_price_dep():
