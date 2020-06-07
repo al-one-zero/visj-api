@@ -1,4 +1,3 @@
-import pandas as pd
 from flask import Flask
 from routes import account_api
 

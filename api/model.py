@@ -4,7 +4,7 @@ import numpy as np
 import random
 import pickle
 
-chemin_csv='../../Data/full.csv'
+chemin_csv='data/full.csv'
 
 p = 0.01 # 1% of the lines
 
@@ -85,4 +85,4 @@ ransac = make_pipeline(RobustScaler(), RANSACRegressor())
 #Using RANSAC Regressor nets even better results
 ransac.fit(X_train, y_train)
 
-pickle.dump(ransac, open('model.visg','wb'))
+pickle.dump(Lasso,open('api/model.visg','wb'))

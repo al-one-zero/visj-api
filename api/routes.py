@@ -13,15 +13,11 @@ def open_file(chemin_csv,p):
     df=pd.read_csv(chemin_csv,header=0,skiprows=lambda i: i>0 and random.random() > p,low_memory=False) 
     return df
 
-df=open_file('../../Data/full.csv',0.01)
+df=open_file('data/full.csv',0.01)
 
 account_api = Blueprint('account_api', __name__)
 
-model = pickle.load(open('model.pkl','rb'))
-
-@account_api.route('/')
-def home():
-    return "Hello " 
+model = pickle.load(open('model.visg','rb'))
 
 @account_api.route('/predict',methods=['POST'])
 def predict():
@@ -38,16 +34,16 @@ def predict():
 @account_api.route('/data_heatmap',methods=['GET'])
 def data_heatmap():
     res=df[['valeur_fonciere','latitude','longitude']]
-    return res.to_json()
+    return res.to_json(orient='values')
 
 @account_api.route('/data_graphique_avg_price_dep',methods=['GET'])
 def data_graphique_avg_price_dep():
     res=df[['valeur_fonciere','code_departement']]
     res=res.groupby(['code_departement']).mean()
-    return res.to_json()
+    return res.to_json(orient='values')
 
 @account_api.route('/data_graphique_avg_surface_dep',methods=['GET'])
 def data_graphique_avg_surface_dep():
     res=df[['surface_terrain','code_departement']]
-    res=res.groupby(['code_departement']).mean()
+    res=res.groupby(['code_departement']).mean(orient='values')
     return res.to_json()
