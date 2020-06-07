@@ -45,5 +45,5 @@ def data_graphique_avg_price_dep():
 @account_api.route('/data_graphique_avg_surface_dep',methods=['GET'])
 def data_graphique_avg_surface_dep():
     res=df[['surface_terrain','code_departement']]
-    res=res.groupby(['code_departement']).mean(orient='values')
-    return res.to_json()
+    res=res.groupby(['code_departement']).mean()
+    return res.to_json(orient='values')
