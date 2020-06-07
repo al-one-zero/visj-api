@@ -4,7 +4,7 @@ import numpy as np
 import random
 import pickle
 
-chemin_csv='../../Data/full.csv'
+chemin_csv='api/data/full.csv'
 
 p = 0.01 # 1% of the lines
 
@@ -83,4 +83,4 @@ Lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.05, random_state=1))
 #Using Lasso nets slightly better results
 Lasso.fit(X_train, y_train)
 
-pickle.dump(Lasso,open('model.visg','wb'))
+pickle.dump(Lasso,open('api/model.visg','wb'))
