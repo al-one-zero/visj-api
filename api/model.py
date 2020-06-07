@@ -70,7 +70,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
 #PCA
-pca = make_pipeline(RobustScaler, n_components=8)
+pca = make_pipeline(RobustScaler(), PCA(n_components=8))
 pca.fit(X_train)
 X_train, X_test = pca.transform(X_train), pca.transform(X_test)
 
@@ -82,4 +82,4 @@ Lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.05, random_state=1))
 #Using Lasso nets slightly better results
 Lasso.fit(X_train, y_train)
 
-pickle.dump(ENet,open('model.visg','wb'))
+pickle.dump(Lasso,open('model.visg','wb'))
