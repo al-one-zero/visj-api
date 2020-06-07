@@ -63,8 +63,7 @@ from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
 
-from sklearn.linear_model import ElasticNet
-from sklearn.linear_model import Lasso
+from sklearn.linear_model import RANSACRegressor
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import StandardScaler
@@ -77,10 +76,13 @@ X_train, X_test = pca.transform(X_train), pca.transform(X_test)
 
 #Model training
 #ENet = make_pipeline(RobustScaler(), Lasso(alpha=0.05, random_state=3))
-Lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.05, random_state=1))
+#Lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.05, random_state=1))
+ransac = make_pipeline(RobustScaler(), RANSACRegressor())
 
 #ENet.fit(X_train, y_train)
 #Using Lasso nets slightly better results
-Lasso.fit(X_train, y_train)
+#Lasso.fit(X_train, y_train)
+#Using RANSAC Regressor nets even better results
+ransac.fit(X_train, y_train)
 
-pickle.dump(Lasso,open('model.visg','wb'))
+pickle.dump(ransac, open('model.visg','wb'))
