@@ -22,7 +22,7 @@ model = pickle.load(open('model.visg','rb'))
 @account_api.route('/predict',methods=['POST'])
 def predict():
     #Get the features
-    res_form=request.form.values()
+    res_form=list(map(float, request.form.get('data').split(',')))
     final_features = [np.array(res_form)]
     res=model.predict(final_features)
     output=res[0]
